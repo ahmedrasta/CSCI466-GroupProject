@@ -1,0 +1,84 @@
+CREATE TABLE queue (
+    queueID INT NOT NULL PRIMARY KEY,
+    queueType VARCHAR(255),
+    queueCost DECIMAL(10, 2),
+    queuePos INT
+);
+
+CREATE TABLE User (
+    UserID INT NOT NULL PRIMARY KEY,
+    Userpayment INT NOT NULL PRIMARY KEY,
+    UserName VARCHAR(255),
+    Email VARCHAR(255),
+    Password VARCHAR(255),
+);
+
+CREATE TABLE Song (
+    SongID INT NOT NULL PRIMARY KEY,
+    SongName VARCHAR(255)
+);
+
+CREATE TABLE Contributor (
+    ConID INT NOT NULL PRIMARY KEY,
+    ConName VARCHAR(255),
+    Contribution VARCHAR(255)
+);
+
+CREATE TABLE KaraokeFile (
+    FileID INT NOT NULL PRIMARY KEY,
+    FOREIGN KEY (UserID) REFERENCES User(userID),
+    FOREIGN KEY (SongID) REFERENCES Song(SongID),
+    FOREIGN KEY (contID) REFERENCES contributor(SongID)   
+);
+
+CREATE TABLE priorityQueue (
+    SongID INT NOT NULL,
+    queueID INT NOT NULL,
+    SongPos INT,
+    PRIMARY KEY (SongID, queueID),
+    FOREIGN KEY (SongID) REFERENCES Song(SongID),
+    FOREIGN KEY (queueID) REFERENCES queue(queueID)
+);
+
+
+CREATE TABLE  (
+    UserID INT NOT NULL,
+    SongID INT NOT NULL,
+    NumOfReq INT,
+    PRIMARY KEY (UserID, SongID),
+    FOREIGN KEY (UserID) REFERENCES User(UserID),
+    FOREIGN KEY (SongID) REFERENCES Song(SongID)
+);
+
+CREATE TABLE Artist (
+    ArtistID INT NOT NULL PRIMARY KEY,
+    ArtistName VARCHAR(255)
+);
+
+CREATE TABLE SignUp (
+    queueID INT NOT NULL,
+    UserID INT NOT NULL,
+    NumOfsignups INT,
+    PRIMARY KEY (queueID, UserID),
+    FOREIGN KEY (queueID) REFERENCES queue(queueID),
+    FOREIGN KEY (UserID) REFERENCES User(UserID)
+);
+
+
+CREATE TABLE SongContributor (
+    SongID INT NOT NULL,
+    ConID INT NOT NULL,
+    WhatSong VARCHAR(255),
+    PRIMARY KEY (SongID, ConID),
+    FOREIGN KEY (SongID) REFERENCES Song(SongID),
+    FOREIGN KEY (ConID) REFERENCES Contributor(ConID)
+);
+
+CREATE TABLE SongArtist (
+    SongID INT NOT NULL,
+    ArtistID INT NOT NULL,
+    WhichSong VARCHAR(255),
+    PRIMARY KEY (SongID, ArtistID),
+    FOREIGN KEY (SongID) REFERENCES Song(SongID),
+    FOREIGN KEY (ArtistID) REFERENCES Artist(ArtistID)
+);
